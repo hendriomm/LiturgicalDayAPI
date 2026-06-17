@@ -53,7 +53,7 @@ Make sure Python 3.10+ is installed.
 
 2. **Run Unit Tests**:
    ```bash
-   python3 -m unittest discover -s tests
+   python3 -m pytest
    ```
 
 3. **Start the API Server**:

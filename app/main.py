@@ -1,8 +1,13 @@
+import sys
+import os
+
+# Ensure the app folder is in the python path
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 from fastapi import FastAPI, Query, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import date as date_type, datetime
 from typing import Optional
-import os
 
 from liturgical_engine import LiturgicalEngine, LocalizationManager
 

@@ -208,5 +208,82 @@ class TestLiturgicalEngine(unittest.TestCase):
         self.assertEqual(res5.main_day.name_res_id, "sunday_after_easter")
         self.assertEqual(res5.main_day.liturgical_class, LiturgicalClass.II)
 
+    def test_great_feasts_and_marian_feasts_2026(self):
+        expected_feasts = [
+            (datetime.date(2026, 4, 5), "Easter Sunday", LiturgicalClass.I, LiturgicalColor.WHITE),
+            (datetime.date(2026, 5, 24), "Pentecost Sunday", LiturgicalClass.I, LiturgicalColor.RED),
+            (datetime.date(2026, 12, 25), "Christmas Day", LiturgicalClass.I, LiturgicalColor.WHITE),
+            (datetime.date(2026, 6, 4), "Corpus Christi", LiturgicalClass.I, LiturgicalColor.WHITE),
+            (datetime.date(2026, 3, 25), "Annunciation of the B.V.M.", LiturgicalClass.I, LiturgicalColor.WHITE),
+            (datetime.date(2026, 8, 15), "Assumption of the B.V.M.", LiturgicalClass.I, LiturgicalColor.WHITE),
+            (datetime.date(2026, 12, 8), "Immaculate Conception of the B.V.M.", LiturgicalClass.I, LiturgicalColor.WHITE)
+        ]
+
+        for date, name, l_class, color in expected_feasts:
+            res = self.engine.resolve(date, include_brazilian=False)
+            self.assertEqual(res.main_day.name, name)
+            self.assertEqual(res.main_day.liturgical_class, l_class)
+            self.assertEqual(res.main_day.color, color)
+
+    def test_random_days_2026(self):
+        random_days = [
+            (datetime.date(2026, 1, 4), "Most Holy Name of Jesus", LiturgicalClass.II, LiturgicalColor.WHITE),
+            (datetime.date(2026, 1, 13), "Commemoration of the Baptism of Our Lord", LiturgicalClass.II, LiturgicalColor.WHITE),
+            (datetime.date(2026, 1, 14), "St. Hilary, Bishop, Confessor and Doctor", LiturgicalClass.III, LiturgicalColor.WHITE),
+            (datetime.date(2026, 1, 16), "St. Marcellus I, Pope & Martyr", LiturgicalClass.III, LiturgicalColor.RED),
+            (datetime.date(2026, 1, 17), "St. Anthony, Abbot", LiturgicalClass.III, LiturgicalColor.WHITE),
+            (datetime.date(2026, 1, 23), "St. Raymond of Peñafort, Confessor", LiturgicalClass.III, LiturgicalColor.WHITE),
+            (datetime.date(2026, 2, 10), "St. Scholastica, Virgin", LiturgicalClass.III, LiturgicalColor.WHITE),
+            (datetime.date(2026, 2, 14), "Feria of Septuagesima", LiturgicalClass.IV, LiturgicalColor.VIOLET),
+            (datetime.date(2026, 2, 17), "Feria of Septuagesima", LiturgicalClass.IV, LiturgicalColor.VIOLET),
+            (datetime.date(2026, 2, 19), "Feria of Lent", LiturgicalClass.III, LiturgicalColor.VIOLET),
+            (datetime.date(2026, 2, 22), "1st Sunday of Lent", LiturgicalClass.I, LiturgicalColor.VIOLET),
+            (datetime.date(2026, 2, 27), "Feria of Lent", LiturgicalClass.III, LiturgicalColor.VIOLET),
+            (datetime.date(2026, 3, 5), "Feria of Lent", LiturgicalClass.III, LiturgicalColor.VIOLET),
+            (datetime.date(2026, 3, 13), "Feria of Lent", LiturgicalClass.III, LiturgicalColor.VIOLET),
+            (datetime.date(2026, 3, 21), "Feria of Lent", LiturgicalClass.III, LiturgicalColor.VIOLET),
+            (datetime.date(2026, 3, 23), "Feria of Lent", LiturgicalClass.III, LiturgicalColor.VIOLET),
+            (datetime.date(2026, 4, 12), "Low Sunday (Quasimodo)", LiturgicalClass.I, LiturgicalColor.WHITE),
+            (datetime.date(2026, 4, 21), "St. Anselm, Bishop, Confessor & Doctor", LiturgicalClass.III, LiturgicalColor.WHITE),
+            (datetime.date(2026, 4, 22), "SS. Soter and Caius, Popes & Martyrs", LiturgicalClass.III, LiturgicalColor.RED),
+            (datetime.date(2026, 4, 23), "Feria", LiturgicalClass.IV, LiturgicalColor.WHITE),
+            (datetime.date(2026, 4, 25), "St. Mark, Evangelist", LiturgicalClass.II, LiturgicalColor.RED),
+            (datetime.date(2026, 4, 30), "St. Catherine of Siena, Virgin", LiturgicalClass.III, LiturgicalColor.WHITE),
+            (datetime.date(2026, 5, 6), "Feria", LiturgicalClass.IV, LiturgicalColor.WHITE),
+            (datetime.date(2026, 5, 16), "St. Ubaldus, Bishop & Confessor", LiturgicalClass.III, LiturgicalColor.WHITE),
+            (datetime.date(2026, 5, 21), "Feria", LiturgicalClass.IV, LiturgicalColor.WHITE),
+            (datetime.date(2026, 5, 23), "Vigil of Pentecost", LiturgicalClass.I, LiturgicalColor.RED),
+            (datetime.date(2026, 6, 22), "Feria", LiturgicalClass.IV, LiturgicalColor.GREEN),
+            (datetime.date(2026, 6, 24), "Nativity of St. John the Baptist", LiturgicalClass.I, LiturgicalColor.WHITE),
+            (datetime.date(2026, 6, 26), "SS. John and Paul, Martyrs", LiturgicalClass.III, LiturgicalColor.RED),
+            (datetime.date(2026, 7, 3), "St. Irenaeus, Bishop & Martyr", LiturgicalClass.III, LiturgicalColor.RED),
+            (datetime.date(2026, 7, 13), "Feria", LiturgicalClass.IV, LiturgicalColor.GREEN),
+            (datetime.date(2026, 7, 14), "St. Bonaventure, Bishop, Confessor and Doctor", LiturgicalClass.III, LiturgicalColor.WHITE),
+            (datetime.date(2026, 8, 3), "Feria", LiturgicalClass.IV, LiturgicalColor.GREEN),
+            (datetime.date(2026, 8, 5), "Dedication of the Basilica of St. Mary Major", LiturgicalClass.III, LiturgicalColor.WHITE),
+            (datetime.date(2026, 8, 18), "Feria", LiturgicalClass.IV, LiturgicalColor.GREEN),
+            (datetime.date(2026, 8, 24), "St. Bartholomew, Apostle", LiturgicalClass.II, LiturgicalColor.RED),
+            (datetime.date(2026, 9, 16), "SS. Cornelius and Cyprian, Martyrs", LiturgicalClass.III, LiturgicalColor.RED),
+            (datetime.date(2026, 10, 2), "Holy Guardian Angels", LiturgicalClass.III, LiturgicalColor.WHITE),
+            (datetime.date(2026, 10, 7), "The Most Holy Rosary of the B.V.M.", LiturgicalClass.II, LiturgicalColor.WHITE),
+            (datetime.date(2026, 10, 10), "St. Francis Borgia, Confessor", LiturgicalClass.III, LiturgicalColor.WHITE),
+            (datetime.date(2026, 10, 15), "St. Teresa of Avila, Virgin", LiturgicalClass.III, LiturgicalColor.WHITE),
+            (datetime.date(2026, 10, 29), "Feria", LiturgicalClass.IV, LiturgicalColor.GREEN),
+            (datetime.date(2026, 10, 30), "Feria", LiturgicalClass.IV, LiturgicalColor.GREEN),
+            (datetime.date(2026, 11, 5), "Feria", LiturgicalClass.IV, LiturgicalColor.GREEN),
+            (datetime.date(2026, 11, 6), "Feria", LiturgicalClass.IV, LiturgicalColor.GREEN),
+            (datetime.date(2026, 11, 24), "St. John of the Cross, Confessor and Doctor", LiturgicalClass.III, LiturgicalColor.WHITE),
+            (datetime.date(2026, 11, 29), "1st Sunday of Advent", LiturgicalClass.I, LiturgicalColor.VIOLET),
+            (datetime.date(2026, 12, 13), "3rd Sunday of Advent", LiturgicalClass.I, LiturgicalColor.ROSE),
+            (datetime.date(2026, 12, 24), "Vigil of the Nativity", LiturgicalClass.I, LiturgicalColor.VIOLET),
+            (datetime.date(2026, 12, 26), "St. Stephen, Protomartyr", LiturgicalClass.II, LiturgicalColor.RED)
+        ]
+
+        for date, name, l_class, color in random_days:
+            res = self.engine.resolve(date, include_brazilian=False)
+            self.assertEqual(res.main_day.name, name, f"Failed for date {date}: expected name '{name}', got '{res.main_day.name}'")
+            self.assertEqual(res.main_day.liturgical_class, l_class, f"Failed for date {date}: expected class '{l_class}', got '{res.main_day.liturgical_class}'")
+            self.assertEqual(res.main_day.color, color, f"Failed for date {date}: expected color '{color}', got '{res.main_day.color}'")
+
 if __name__ == "__main__":
     unittest.main()
