@@ -1,0 +1,13 @@
+<sanctorale>
+    <feast date="03-23" name="St. Turibius of Mogrovejo" nameResId="st_turibius" class="II" color="WHITE" />
+    <feast date="05-03" name="Finding of the Holy Cross" nameResId="finding_cross" class="II" color="RED" isLordFeast="true" />
+    <feast date="06-09" name="St. Jose de Anchieta" nameResId="st_jose_anchieta" class="III" color="WHITE" />
+    <feast date="07-09" name="St. Paulina" nameResId="st_paulina" class="III" color="WHITE" />
+    <feast date="07-15" name="Bl. Ignatius of Azevedo and Companions" nameResId="bl_ignatius_azevedo" class="III" color="RED" />
+    <feast date="08-30" name="St. Rose of Lima" nameResId="st_rose_lima" class="I" color="WHITE" />
+    <feast date="10-12" name="Our Lady of Aparecida" nameResId="our_lady_aparecida" class="I" color="WHITE" />
+    <feast date="10-19" name="St. Peter of Alcantara" nameResId="st_peter_alcantara" class="I" color="WHITE" />
+    <feast date="10-25" name="St. Frei Galvao" nameResId="st_frei_galvao" class="III" color="WHITE" />
+    <feast date="11-17" name="Bl. Roque González and Companions" nameResId="bl_roque_gonzalez" class="III" color="RED" />
+    <feast date="12-12" name="Our Lady of Guadalupe" nameResId="our_lady_guadalupe" class="II" color="WHITE" />
+</sanctorale>

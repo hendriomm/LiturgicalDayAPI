@@ -3,8 +3,8 @@ import datetime
 import sys
 import os
 
-# Ensure the app folder is in the python path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../app")))
+# Ensure the root folder is in the python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from liturgical_engine import LiturgicalEngine, calculate_easter, LiturgicalClass, LiturgicalColor
 
