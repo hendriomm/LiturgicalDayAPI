@@ -99,6 +99,7 @@
     <feast date="06-18" name="St. Ephrem the Syrian, Deacon, Confessor &amp; Doctor" nameResId="st_ephrem" class="III" color="WHITE" />
     <feast date="06-19" name="St. Juliana Falconieri, Virgin" nameResId="st_juliana_falconieri" class="III" color="WHITE" />
     <feast date="06-21" name="St. Aloysius Gonzaga, Confessor" nameResId="st_aloysius_gonzaga" class="III" color="WHITE" />
+    <feast date="06-22" name="St. Paulinus of Nola, Bishop and Confessor" nameResId="st_paulinus_nola" class="III" color="WHITE" />
     <feast date="06-23" name="Vigil of the Nativity of St. John the Baptist" nameResId="vigil_st_john_baptist" class="II" color="VIOLET" />
     <feast date="06-24" name="Nativity of St. John the Baptist" nameResId="st_john_baptist_nativity" class="I" color="WHITE" />
     <feast date="06-25" name="St. William, Abbot" nameResId="st_william_abbot" class="III" color="WHITE" />
@@ -116,7 +117,7 @@
     <feast date="07-12" name="St. John Gualbert, Abbot" nameResId="st_john_gualbert" class="III" color="WHITE" />
     <feast date="07-14" name="St. Bonaventure, Bishop, Confessor and Doctor" nameResId="st_bonaventure" class="III" color="WHITE" />
     <feast date="07-15" name="St. Henry, Emperor, Confessor" nameResId="st_henry" class="III" color="WHITE" />
-    <feast date="07-16" name="Commemoration of B.V.M. of Mount Carmel" nameResId="commem_bvm_carmel" class="III" color="WHITE" />
+    <feast date="07-16" name="Commemoration of B.V.M. of Mount Carmel" nameResId="commem_bvm_carmel" class="IV" color="WHITE" />
     <feast date="07-17" name="St. Alexius, Confessor" nameResId="st_alexius" class="III" color="WHITE" />
     <feast date="07-18" name="St. Camillus de Lellis, Confessor" nameResId="st_camillus_de_lellis" class="III" color="WHITE" />
     <feast date="07-19" name="St. Vincent de Paul, Confessor" nameResId="st_vincent_de_paul" class="III" color="WHITE" />

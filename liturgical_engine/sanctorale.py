@@ -78,6 +78,7 @@ class Sanctorale:
 class BrazilianSanctorale:
     def __init__(self, xml_path: str):
         self.feasts = self.parse(xml_path)
+        self.relative_feasts = self.parse_relative(xml_path)
 
     def parse(self, xml_path: str) -> dict:
         feasts = {}
@@ -88,6 +89,8 @@ class BrazilianSanctorale:
             root = tree.getroot()
             for elem in root.findall("feast"):
                 date = elem.attrib.get("date")
+                if not date or date.startswith("relative:"):
+                    continue
                 name = elem.attrib.get("name")
                 name_res_id = elem.attrib.get("nameResId")
                 class_str = elem.attrib.get("class")
@@ -116,6 +119,54 @@ class BrazilianSanctorale:
             print(f"Error parsing Brazilian sanctoral {xml_path}: {e}")
         return feasts
 
+    def parse_relative(self, xml_path: str) -> list:
+        relative_feasts = []
+        if not os.path.exists(xml_path):
+            return relative_feasts
+        try:
+            tree = ET.parse(xml_path)
+            root = tree.getroot()
+            for elem in root.findall("feast"):
+                relative_to = elem.attrib.get("relativeTo")
+                offset_days = elem.attrib.get("offsetDays")
+                if not relative_to or offset_days is None:
+                    continue
+                name = elem.attrib.get("name")
+                name_res_id = elem.attrib.get("nameResId")
+                class_str = elem.attrib.get("class")
+                color_str = elem.attrib.get("color")
+                is_lord_feast = elem.attrib.get("isLordFeast") == "true"
+                try:
+                    lit_class = LiturgicalClass[class_str]
+                except KeyError:
+                    lit_class = LiturgicalClass.III
+                try:
+                    lit_color = LiturgicalColor[color_str]
+                except KeyError:
+                    lit_color = LiturgicalColor.WHITE
+                relative_feasts.append((relative_to, int(offset_days), LiturgicalDay(
+                    name=name,
+                    name_res_id=name_res_id or None,
+                    name_args=None,
+                    liturgical_class=lit_class,
+                    color=lit_color,
+                    is_lord_feast=is_lord_feast
+                )))
+        except Exception as e:
+            print(f"Error parsing Brazilian sanctoral {xml_path}: {e}")
+        return relative_feasts
+
     def get_day(self, date: datetime.date) -> LiturgicalDay:
         key = f"{date.month:02d}-{date.day:02d}"
-        return self.feasts.get(key)
+        fixed = self.feasts.get(key)
+        if fixed is not None:
+            return fixed
+
+        for relative_to, offset_days, feast in self.relative_feasts:
+            if relative_to == "sacred_heart":
+                from .easter import calculate_easter
+                sacred_heart = calculate_easter(date.year) + datetime.timedelta(days=68)
+                if date == sacred_heart + datetime.timedelta(days=offset_days):
+                    return feast
+
+        return None

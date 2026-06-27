@@ -87,7 +87,7 @@ class TemporalCycle:
         sunday_after_epiphany_1 = epiphany + datetime.timedelta(days=7 if epiphany_dow == 7 else 7 - epiphany_dow)
         
         if date == sunday_after_epiphany_1 and date < septuagesima:
-            return LiturgicalDay("Feast of the Holy Family", "holy_family", None, LiturgicalClass.II, LiturgicalColor.WHITE)
+            return LiturgicalDay("Feast of the Holy Family", "holy_family", None, LiturgicalClass.II, LiturgicalColor.WHITE, is_lord_feast=True)
 
         # 1. Easter Cycle (from XML)
         from_easter = self.easter_cycle.get(diff_from_easter)

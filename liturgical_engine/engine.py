@@ -24,13 +24,32 @@ class LiturgicalEngine:
         universal_sanctoral = self.sanctorale.get_day(date)
         brazilian_sanctoral = self.brazilian_sanctorale.get_day(date) if include_brazilian else None
         
+        sanctoral_comms = []
         if brazilian_sanctoral is not None:
-            if universal_sanctoral is None or brazilian_sanctoral.liturgical_class.value < universal_sanctoral.liturgical_class.value:
+            if universal_sanctoral is None:
                 sanctoral = brazilian_sanctoral
+            elif brazilian_sanctoral.liturgical_class.value <= universal_sanctoral.liturgical_class.value:
+                sanctoral = brazilian_sanctoral
+                sanctoral_comms.append(universal_sanctoral)
             else:
                 sanctoral = universal_sanctoral
+                sanctoral_comms.append(brazilian_sanctoral)
         else:
             sanctoral = universal_sanctoral
+
+        def result_with_filtered_comms(main: LiturgicalDay, comms: list) -> LiturgicalResult:
+            filtered = []
+            seen = set()
+            for c in comms:
+                if c.liturgical_class == LiturgicalClass.IV:
+                    continue
+                if c.observance_key() == main.observance_key():
+                    continue
+                key = c.observance_key()
+                if key not in seen:
+                    seen.add(key)
+                    filtered.append(c)
+            return LiturgicalResult(main, filtered)
 
         # Special check for Our Lady on Saturday
         if date.isoweekday() == 6 and (temporal is None or temporal.name_res_id == "feria") and sanctoral is None:
@@ -62,40 +81,30 @@ class LiturgicalEngine:
             return LiturgicalResult(temporal)
 
         if temporal is None and sanctoral is not None:
-            return LiturgicalResult(sanctoral)
+            return result_with_filtered_comms(sanctoral, sanctoral_comms)
 
         t = temporal
         s = sanctoral
-
-        def result_with_filtered_comms(main: LiturgicalDay, comms: list) -> LiturgicalResult:
-            filtered = []
-            seen = set()
-            for c in comms:
-                if c.liturgical_class == LiturgicalClass.IV:
-                    continue
-                if c.observance_key() == main.observance_key():
-                    continue
-                key = c.observance_key()
-                if key not in seen:
-                    seen.add(key)
-                    filtered.append(c)
-            return LiturgicalResult(main, filtered)
+        comms = [s] + sanctoral_comms
+        comms_if_s_wins = [t] + sanctoral_comms
 
         # Rule 1: Higher class wins
         if t.liturgical_class.value < s.liturgical_class.value:
-            return result_with_filtered_comms(t, [s])
+            return result_with_filtered_comms(t, comms)
         elif s.liturgical_class.value < t.liturgical_class.value:
-            return result_with_filtered_comms(s, [t])
+            return result_with_filtered_comms(s, comms_if_s_wins)
 
         # Rule 2: Same class
         if date.isoweekday() == 7: # Sunday
+            if t.is_lord_feast:
+                return result_with_filtered_comms(t, comms)
             if s.is_lord_feast:
-                return result_with_filtered_comms(s, [t])
+                return result_with_filtered_comms(s, comms_if_s_wins)
             if t.liturgical_class == LiturgicalClass.I:
-                return result_with_filtered_comms(t, [s])
-            return result_with_filtered_comms(t, [s])
+                return result_with_filtered_comms(t, comms)
+            return result_with_filtered_comms(t, comms)
 
-        return result_with_filtered_comms(t, [s])
+        return result_with_filtered_comms(t, comms)
 
     def get_season_color(self, date: datetime.date) -> LiturgicalColor:
         year = date.year
