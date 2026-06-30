@@ -113,7 +113,7 @@ class LiturgicalEngine:
 
         if 0 <= diff_from_easter <= 55:
             return LiturgicalColor.WHITE
-        if -70 <= diff_from_easter <= -1:
+        if -63 <= diff_from_easter <= -1:
             return LiturgicalColor.VIOLET
 
         christmas = datetime.date(year, 12, 25)
