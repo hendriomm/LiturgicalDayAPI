@@ -2,6 +2,9 @@
 
 A Python library that resolves the liturgical feast of any date according to the **Roman Catholic Missal of 1962** (Extraordinary Form of the Roman Rite). Ported from the calendar engine of [LiturgyCalendarApp](https://github.com/hendriomm/LiturgyCalendarApp).
 
+> [!NOTE]
+> **Dart/Flutter Port Available:** The `LiturgicalDayAPI` has been fully ported to Dart to support the modern [LiturgyCalendarApp](https://github.com/hendriomm/LiturgyCalendarApp) Flutter PWA. You can find the complete Dart port directly within the `lib/liturgical_engine/` directory of the Flutter app repository.
+
 ## Features
 
 - **Date Resolution** — Given any `datetime.date`, resolves the principal liturgical feast and any commemorations.
